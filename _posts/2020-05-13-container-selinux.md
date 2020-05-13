@@ -4,7 +4,7 @@ title:  "Requires: container-selinux >= 2:2.74"
 date:   2020-05-13 16:28:34 +1000
 categories: linux centos docker
 ---
-I had a issue recently installign docker on Centos-7
+I had an issue recently installing docker on Centos-7
 
 {% highlight bash %}
 Error: Package: containerd.io-1.2.10-3.2.el7.x86_64 (docker-ce-stable)

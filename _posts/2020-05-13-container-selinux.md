@@ -16,7 +16,7 @@ Error: Package: containerd.io-1.2.10-3.2.el7.x86_64 (docker-ce-stable)
 Visit: 
 [http://mirror.centos.org/centos/7/extras/x86_64/Packages/](http://mirror.centos.org/centos/7/extras/x86_64/Packages/)
 
-Find the most recent version ( unless you need a specific version).  At the time that was:
+Find the most recent version ( unless you need a specific version ).  At the time that was:
 
 container-selinux-2.119.1-1.c57a6f9.el7.noarch.rpm
 

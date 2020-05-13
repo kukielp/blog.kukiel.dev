@@ -17,8 +17,10 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
-        - uses: lemonarc/jekyll-action@1.0.0
-          # Example deployment: Push to S3
+
+      - uses: lemonarc/jekyll-action@1.0.0
+      
+        # Example deployment: Push to S3
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

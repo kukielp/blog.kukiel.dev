@@ -19,6 +19,6 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: as-southeast-2
 
-- name: Sync output to S3
-    run: |
-    aws s3 sync ./_site/ s3://gh-paul --delete
+      - name: Sync output to S3
+        run: |
+          aws s3 sync ./_site/ s3://gh-paul --delete

@@ -4,11 +4,11 @@ title:  "Running AWS Code build locally"
 date:   2020-05-14 16:38:34 +1000
 categories: aws cd/cd codebuild docker
 ---
-I've been working with code build for some time now, have even had to configure our own images for some Windows builds.  Recently I helped my friend Zain setup a pipeline, while leanring the ins and out of codebuild ( using scp in codebuild to be specfic ) we performed 100's of test builds.  While the sercice itself is quite cheap free is a good option to cheap.  When asked how can I cut the costs I suggested running codebuild locally which I had not done myself untill now.
+I've been working with code build for some time now, have even had to configure our own images for some Windows builds.  Recently I helped my friend Zain setup a pipeline, while learning the ins and out of codebuild ( using scp in codebuild to be specfic ) we performed 100's of test builds.  While the sercice itself is quite cheap free is a good option to cheap.  When asked how can I cut the costs I suggested running codebuild locally which I had not done myself until now.
 
-There is a great artile on [AWS Code Build Locally](https://aws.amazon.com/blogs/devops/announcing-local-build-support-for-aws-codebuild/)
+There is a great article on [AWS Code Build Locally](https://aws.amazon.com/blogs/devops/announcing-local-build-support-for-aws-codebuild/)
 
-but I thought I'd repeat the process and provide a very simple app to demonstrate the process as well as using actual aws credentials to perform typical tasks such as syncing to s3 or accessing parmeter store.
+but I thought I'd repeat the process and provide a very simple app to demonstrate the process as well as using actual aws credentials to perform typical tasks such as syncing to s3 or accessing parameter store.
 
 There are some pre-requisist:
 
@@ -25,17 +25,17 @@ The Steps at a high level are:
 4. Download the aws helper script
 and your good to go.
 
-For those beginning what is the codebuild doing, well it's a build envrioment.  If you look in the docker file you'll see it's literally installing all the depancies you might need ( ok not all of them but lots of common ones ).
+For those beginning what is the codebuild doing, well it's a build envrioment.  If you look in the docker file you'll see it's literally installing all the dependencies you might need ( ok not all of them but lots of common ones ).
 
-You pass your repo to the build enviroment alogn with the instructions in the buildspec.yaml and the code build agent will interperate the commands running your build steps.
+You pass your repo to the build environment along with the instructions in the buildspec.yaml and the code build agent will interpret the commands running your build steps.
 
 {% highlight bash %}
- paulk@iMac#/tmp/cra-test$ codebuild_build.sh -i aws/codebuild/standard:4.0 -a /tmp -c ~/.aws
+ paulk@iMac#/tmp/pra-test$ codebuild_build.sh -i aws/codebuild/standard:4.0 -a /tmp -c ~/.aws
 {% endhighlight %}
 
 My current workign directory ( pwd )
 {% highlight bash %}
- /tmp/cra-test
+ /tmp/pra-test
 {% endhighlight %}
 
 I place codebuild.sh in my path so I can call it anywhere
@@ -61,7 +61,7 @@ Use -c to specify the aws credentials file
 You can see how the shell scripts helps as it puts together this:
 {% highlight bash %}
 Build Command:
-docker run -it -v /var/run/docker.sock:/var/run/docker.sock -e "IMAGE_NAME=aws/codebuild/standard:4.0" -e "ARTIFACTS=/tmp" -e "SOURCE=/tmp/cra-test" -e "AWS_CONFIGURATION=/Users/paulk/.aws" -e "INITIATOR=paulk" amazon/aws-codebuild-local:latest
+docker run -it -v /var/run/docker.sock:/var/run/docker.sock -e "IMAGE_NAME=aws/codebuild/standard:preact" -e "ARTIFACTS=/tmp" -e "SOURCE=/tmp/cra-test" -e "AWS_CONFIGURATION=/Users/paulk/.aws" -e "INITIATOR=paulk" amazon/aws-codebuild-local:latest
 {% endhighlight %}
 
 See a run below

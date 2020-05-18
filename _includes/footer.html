@@ -6,4 +6,7 @@
     {% capture currentyear %}{{ 'now' | date: "%Y" }}{% endcapture %}
     <span>© {{ currentyear }}</span>
   </a>
+  {% if site.google_analytics %}
+    {% include analytics.html %}
+  {% endif %}
 </footer>

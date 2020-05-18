@@ -30,3 +30,5 @@ plugins:
 # Custom variables
 owner : "Paul Kukiel"
 year : "2020"
+
+google_analytics: UA-166895844-1

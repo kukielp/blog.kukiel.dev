@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Faster build times with AWS Codebuild"
-date:   2020-05-16 08:38:34 +1000
+date:   2020-05-18 08:38:34 +1000
 categories: aws codebuild jekyll ec2 costsavings docker
 ---
 

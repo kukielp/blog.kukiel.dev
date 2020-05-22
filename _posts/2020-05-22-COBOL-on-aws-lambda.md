@@ -13,7 +13,7 @@ categories: aws COBOL lambda ec2 costsavings docker
 
 I have spent part of my working career in Financial services, it's a great industry and an anyone who has spent any time there knows Mainframe, COBOL and Fortran do come up.  I know of one COBOL programmer personally ( the wife of a friend ), how ever have never see COBOL code myself unitl ~a year ago where I did some research, found a compiler and tried it (Hello CBOLO).  I then did a quick google about running this in Lambda ( why not? ) and found this [repo](https://github.com/ktsmy/aws-lambda-cobol-sample).  I left it at that.
 
-Recently I was triggered to re-visit the project, I forked the repo and made some changes, added a [SAM emplate](https://aws.amazon.com/serverless/sam/) adjusted the build scripts and exposed the result as an invokable http endpoint, you can see the result here:
+Recently I was triggered to re-visit the project, I forked the repo and made some changes, added a [SAM template](https://aws.amazon.com/serverless/sam/) adjusted the build scripts and exposed the result as an invokable http endpoint, you can see the result here:
 
 [Click for COBOL/AWS/SAM Repo](https://github.com/kukielp/aws-lambda-cobol-sample)
 

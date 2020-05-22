@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Runnign Cobol on AWS Lambda"
+title:  "Running COBOL on AWS Lambda"
 date:   2020-05-22 018:18:12 +1000
 categories: aws COBOL lambda ec2 costsavings docker
 ---

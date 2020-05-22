@@ -15,10 +15,17 @@ I have spent part of my working career in Financial services, it's a great indus
 
 Recently I was triggered to re-visit the project, I forked the repo and made some changes, added a [SAM emplate](https://aws.amazon.com/serverless/sam/) adjusted the build scripts and exposed the result as an invokable http endpoint, you can see the result here:
 
-<iframe width="625" height="30" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://fe9yjg76ei.execute-api.ap-southeast-2.amazonaws.com/Prod/function1" style="border: 1px solid black;background: #FFFFFF;"></iframe>
+[Click for COBOL/AWS/SAM Repo](https://github.com/kukielp/aws-lambda-cobol-sample)
 
+iFrame of an API call:
+<iframe width="625" height="30" frameborder="0" scrolling="no" 
+    marginheight="0" marginwidth="0" 
+    src="https://fe9yjg76ei.execute-api.ap-southeast-2.amazonaws.com/Prod/function1" 
+    style="border: 1px solid black;background: #FFFFFF;">
+</iframe>
+
+The 2 methods:
 [Demo URL - Function 1:](https://fe9yjg76ei.execute-api.ap-southeast-2.amazonaws.com/Prod/function1)
-
 [Demo URL - Function 2:](https://fe9yjg76ei.execute-api.ap-southeast-2.amazonaws.com/Prod/function2)
 
 I found a COBOL [IDE](https://pypi.org/project/OpenCobolIDE/), if I'm going to give it a go I might as-well have as much helper as possible, COBOL only allows max line length of 128 characters, for a while I was deeply confused as to why I have received syntax errors where I have simply made the lines to long.

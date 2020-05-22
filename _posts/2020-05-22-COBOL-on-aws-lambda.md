@@ -11,9 +11,9 @@ categories: aws COBOL lambda ec2 costsavings docker
     margin-right: auto;"/>
 
 
-I have spent part of my working career in Financial services, it's a great industry and an anyone who has spent any time there knows Mainframe, COBOL and Fortran do come up.  I know of one COBOL programmer personally ( the wife of a friend ), how ever have never see COBOL code myself unitl ~a year ago where I did some research, found a compiler and tried it (Hello CBOLO).  I then did a quick google about running this in Lambda ( why not? ) and found this [repo](https://github.com/ktsmy/aws-lambda-cobol-sample).  I left it at that.
+I have spent part of my working career in Financial services, it's a great industry and anyone who has spent any time there knows Mainframe, COBOL and Fortran do come up.  I know of one COBOL programmer personally ( the wife of a friend ), however have never seen COBOL code myself unitl ~a year ago where I did some research, found a compiler and tried it (Hello COBOL).  I then did a quick google about running this in Lambda ( why not? ) and found this [repo](https://github.com/ktsmy/aws-lambda-cobol-sample).  I left it at that.
 
-Recently I was triggered to re-visit the project, I forked the repo and made some changes, added a [SAM emplate](https://aws.amazon.com/serverless/sam/) adjusted the build scripts and exposed the result as an invokable http endpoint, you can see the result here:
+Recently I was triggered to re-visit the project, I forked the repo and made some changes, added a [SAM template](https://aws.amazon.com/serverless/sam/) adjusted the build scripts and exposed the result as an invokable http endpoint, you can see the result here:
 
 [Click for COBOL/AWS/SAM Repo](https://github.com/kukielp/aws-lambda-cobol-sample)
 
@@ -28,7 +28,7 @@ The 2 methods:
 [Demo URL - Function 1:](https://fe9yjg76ei.execute-api.ap-southeast-2.amazonaws.com/Prod/function1)
 [Demo URL - Function 2:](https://fe9yjg76ei.execute-api.ap-southeast-2.amazonaws.com/Prod/function2)
 
-I found a COBOL [IDE](https://pypi.org/project/OpenCobolIDE/), if I'm going to give it a go I might as-well have as much helper as possible, COBOL only allows max line length of 128 characters, for a while I was deeply confused as to why I have received syntax errors where I have simply made the lines to long.
+I found a COBOL [IDE](https://pypi.org/project/OpenCobolIDE/), if I'm going to give it a go I might as-well have as much help as possible. COBOL only allows max line length of 128 characters. For a while I was deeply confused as to why I have received syntax errors where I have simply made the lines too long.
 ```
 3.1.1 Command Line Length
 16-bit:
@@ -38,16 +38,16 @@ On the 16-bit COBOL system, the maximum length of command lines is 128 character
 On 32-bit COBOL systems the maximum length of a command line is determined by the operating system.
 ```
 
-Please take little notice to the code, string concatenation in 3 different ways, 2 function calls and a loop, hey I built the whole example in a few hours included loots of googling "COBOL string manipulation, COBOL loops" etc.  However I did mimic the expected response that API gateway wants to see and was able to use SAM to publish an API, I can also run this locally.  There are 2 shell scripts and a Dockerfile, these are well documented and at a high level this is the flow:
+Please take little notice of the code: string concatenation in 3 different ways, 2 function calls and a loop, hey I built the whole example in a few hours including lots of googling "COBOL string manipulation, COBOL loops" etc.  However I did mimic the expected response that API gateway wants to see and was able to use SAM to publish an API. I can also run this locally.  There are 2 shell scripts and a Dockerfile, these are well documented and at a high level this is the flow:
 
-Start a container based of Amazon linux v1, install the dependencies required to compile a COBOL program, copy across the COBOL source files, compile each COBOL program, zip the required artefacts and copy it out of the container ready for deployment.  The handler for each path on the API uses convention to map to a COBOL program of the same name eg:
+Start a container based on Amazon linux v1, install the dependencies required to compile a COBOL program, copy across the COBOL source files, compile each COBOL program, zip the required artefacts and copy it out of the container ready for deployment.  The handler for each path on the API uses convention to map to a COBOL program of the same name eg:
 
 ![COBOL](https://cdn.kukiel.dev/cobol-build.gif "COBOL")
 
 - https://{url}/program1  ->  program1.cob
 - https://{url}/programTwo  ->  programTwo.cob
 
-You do not need to COBOL compiler locally to run the tests but you will want one as I made many mistakes while becoming familiar you can install this on MACOS with:
+You do not need to run a COBOL compiler locally to run the tests, but you will want one, as I made many mistakes while becoming familiar. You can install this on MACOS with:
 
 ```
 brew install gnu-cobol

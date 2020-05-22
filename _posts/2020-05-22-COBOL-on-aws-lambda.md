@@ -4,7 +4,7 @@ title:  "Runnign Cobol on AWS Lambda"
 date:   2020-05-22 018:18:12 +1000
 categories: aws COBOL lambda ec2 costsavings docker
 ---
-![COBOL](https://cdn.kukiel.dev/cobol-book.jpg =300)
+![COBOL](https://cdn.kukiel.dev/cobol-book.jpg =300x)
 
 
 I have spent part of my workign carrer in Financial services, it's a great industry and an anyone who has spent any time there knows Mainframe, COBOL and Fortran do come up.  I know 1 of one COBOL programmer personally ( the wife of my friend ), how ever have never see COBOL code myself unitll ~a year ago where I did some research, found a compiler and tried it.  I then did a quick google about running this in Lambda ( why not? ) and found this repo:

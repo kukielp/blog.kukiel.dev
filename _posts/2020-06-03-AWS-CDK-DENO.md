@@ -5,6 +5,17 @@ date:   2020-05-22 018:18:12 +1000
 categories: aws Deno lambda api cdk docker
 ---
 
+# Overview
+
+This is an example project showing:
+- AWS CDK
+- TypeScript
+- Deploying a new layer in a CDK project and deploy a function that will use the layer.
+
+# Repository
+
+ [Github Link](https://github.com/kukielp/deno-lambda-cdk)
+
 # Requirements:
 - AWS CDK
 ```npm install -g aws-cdk```
@@ -12,13 +23,6 @@ categories: aws Deno lambda api cdk docker
 - An AWS account
 - Local credentials ( unless using Cloud 9 )
 - jq [Download Link](https://stedolan.github.io/jq/) ( not required but very useful )
-
-# Overview
-
-This is an example project showing:
-- AWS CDK
-- TypeScript
-- Deploying a new layer in a CDK project and deploy a function that will use the layer.
 
 # Intro
 I have been following Deno for a little while, it's nice to use strong typing in JavaScript however the transpilers are a slight overhead, Deno does away with this and allows the use of TypeScript without compilation.

@@ -5,6 +5,11 @@ date:   2020-05-22 018:18:12 +1000
 categories: aws Deno lambda api cdk docker
 ---
 
+<img src="https://cdn.kukiel.dev/deno-cdk.png" alt="Cobol" style="width:400px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;"/>
+
 # Overview
 
 This is an example project showing:

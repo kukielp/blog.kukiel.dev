@@ -6,6 +6,7 @@ author:
   url: "https://kukiel.dev"
 
 baseurl: /
+rssUrl: "https://kukiel.dev"
 
 source: .
 destination: ./_site

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deploy a S3 bucket and use 53 to point DNS to the site!"
+title:  "Use AWS CDK to deploy a S3 bucket and use 53 to point DNS to the site!"
 date:   2020-06-08 08:28:34 +1000
 categories: AWS CDK S3 Route53
 ---

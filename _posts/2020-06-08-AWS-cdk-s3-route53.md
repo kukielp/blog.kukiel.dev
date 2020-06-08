@@ -179,4 +179,4 @@ and we should see the contents of the index.html file.
 On in a browser.
 ![safari](/assets/post/2020-06-08-AWS-cdk-s3-route53/safari.png "safari")
 
-Full repo:
+Full repo: [https://github.com/kukielp/aws-cdk-s3](https://github.com/kukielp/aws-cdk-s3)

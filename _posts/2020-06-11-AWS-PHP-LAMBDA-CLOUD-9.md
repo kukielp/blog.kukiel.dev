@@ -38,19 +38,19 @@ Navagate to: [https://ap-southeast-2.console.aws.amazon.com/cloud9/home?region=a
 
 Click "Create Environment"
 
-![Cloud9](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/cloud-9-1.png "Cloud9")
+![Cloud9](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/Cloud-9-1.png "Cloud9")
 
 Name the environment:
 
-![Cloud9](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/cloud-9-2.png "Cloud9")
+![Cloud9B](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/Cloud-9-2.png "Cloud9B")
 
 We are going to use this instance to compile source code, it will compile just fine with the smaller instance however it will take a little longer, as I will terminate this environment after this experiment I will use the biggest/fastest as it will only be active for less than 1 hour. 
 
-![Cloud9](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/cloud-9-3.png "Cloud9")
+![Cloud9C](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/Cloud-9-3.png "Cloud9C")
 
 Confirm:
 
-![Cloud9](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/cloud-9-4.png "Cloud9")
+![Cloud9D](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/Cloud-9-4.png "Cloud9D")
 
 The steps we are going to run are taken from the AWS Announcement blog.  It is hand y to copy/paste them to a file on the Cloud9 instance to avoided jumping between tabs.  The full scrip is below.  Open the REDME.md file in Cloud9, delete all the content and paste this in.
 ```bash

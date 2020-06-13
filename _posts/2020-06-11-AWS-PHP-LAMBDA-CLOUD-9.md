@@ -180,4 +180,4 @@ In part 2 we will explore the bootstrap file and how to invoke the Lambda functi
 
 Foe the full Vido walkthrough click and watch here:
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/hBju8c8Oq6s/0.jpg)](https://www.youtube.com/watch?v=hBju8c8Oq6s)
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/hBju8c8Oq6s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

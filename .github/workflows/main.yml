@@ -15,7 +15,7 @@ jobs:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.locka') }}
           restore-keys: |
-            ${{ runner.os }}-gems-
+            ${{ runner.os }}-gemsz-
 
       - uses: lemonarc/jekyll-action@1.0.0
       

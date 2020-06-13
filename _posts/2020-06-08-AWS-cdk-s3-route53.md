@@ -6,7 +6,7 @@ categories: AWS CDK S3 Route53
 ---
 ![Header](/assets/post/2020-06-08-AWS-cdk-s3-route53/header.png "Header")
 
-Static sites are common place, often I'll knock something up as a proof of concept and to share that with my friedns I'll make a public s3 bucket and send the link, quick and easy.  If I need/want this for a longer period of time I typically create a sub domain and point that to the bucket.
+Static sites are commonplace, often I'll knock something up as a proof of concept and to share that with my friends I'll make a public s3 bucket and send the link, quick and easy.  If I need/want this for a longer period of time I typically create a subdomain and point that to the bucket.
 
 In this example we will:
 - Create a bucket in s3 with CDK
@@ -32,7 +32,7 @@ In this example we will:
     cd bucket.website.com
     # Initialise a cdk app
     cdk init app --language typescript
-    # install the 3 additional moduels we will need
+    # install the 3 additional modules we will need
     npm install @aws-cdk/aws-s3 --save-dev
     npm install @aws-cdk/aws-s3-deployment --save-dev
     npm install @aws-cdk/aws-route53 --save-dev
@@ -42,7 +42,7 @@ We are now ready to code.  Let's begin creating the files and folders.
 
 {% highlight bash %}
     # Create a folder for the Program, this is my convention the program may have more parts
-    # for now it's just static so creat just those folders
+    # for now it's just static so create just those folders
     mkdir -p Program/static
     # Populate the index.html file with some content
     echo "S3 Hosting with CDK" > Program/static/index.html
@@ -52,7 +52,7 @@ Our example Program is ready to deploy.
 
 open "lib/{stack-name}.ts" and let's code some infrastructure.
 
-This is very straight forward, remeber when createing buckets that the bucket name should match the domain name you intend to point at the bucket.
+This is very straightforward, remember when creating buckets that the bucket name should match the domain name you intend to point at the bucket.
 
 {% highlight js %}
     //Create the public S3 bucket 
@@ -68,7 +68,7 @@ Be aware that although the removalPolicy is set to destroy, when deleting this s
 
 Deploy the static code to the bucket.
 {% highlight js %}
-    // Static Code in to Bucket.
+    // Static Code into Bucket.
     const deployment = new s3Deployment.BucketDeployment(
         this,
         'deployStaticWebsite',
@@ -119,7 +119,7 @@ export class AwsCdkS3Stack extends cdk.Stack {
       websiteIndexDocument: 'index.html',
     });
 
-    // Static Code in to Bucket.
+    // Static Code into Bucket.
     const deployment = new s3Deployment.BucketDeployment(
       this,
       'deployStaticWebsite',
@@ -144,7 +144,7 @@ export class AwsCdkS3Stack extends cdk.Stack {
 }
 {% endhighlight %}
 
-We will also have to pass in the accountID and default region. Open "bin/{stackname}.ts" and set the values.  I have them set as env variables, you can hard code them for example purpose aswell.
+We will also have to pass in the accountID and default region. Open "bin/{stackname}.ts" and set the values.  I have them set as env variables, you can hardcode them for example purpose as well.
 
 {% highlight js %}
 #!/usr/bin/env node
@@ -180,3 +180,5 @@ On in a browser.
 ![safari](/assets/post/2020-06-08-AWS-cdk-s3-route53/safari.png "safari")
 
 Full repo: [https://github.com/kukielp/aws-cdk-s3](https://github.com/kukielp/aws-cdk-s3)
+
+

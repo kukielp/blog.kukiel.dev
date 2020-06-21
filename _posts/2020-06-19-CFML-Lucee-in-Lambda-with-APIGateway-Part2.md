@@ -103,6 +103,9 @@ Open the URL, be sure to append the template in this example it's dump.cfm
 ![Function](/assets/post/2020-06-19-CFML-Lucee-in-Lambda-with-APIGateway-Part2/final.png "Function")
 
 Full video:
-<iframe width="600" height="400" src="https://www.youtube.com/embed/K3fO9buAdtE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<div class="containerFrame">
+  <iframe class="responsive-iframe" src="https://www.youtube.com/embed/K3fO9buAdtE" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 If you are not sure what CLoud 9 is it's basical a Virtual machine with a web based IDE.  I am runnign Amazon Linux.  You can read more about it here: [https://aws.amazon.com/cloud9/](https://aws.amazon.com/cloud9/)

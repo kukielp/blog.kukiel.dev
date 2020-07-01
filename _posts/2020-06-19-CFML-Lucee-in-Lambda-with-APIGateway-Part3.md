@@ -6,7 +6,18 @@ categories: aws lambda apigateway cfml lucee java coretto cfimage extentions
 ---
 
 
-In the [previouse article on CFML](hhttps://blog.kukiel.dev/posts/CFML-Lucee-in-Lambda-with-APIGateway-Part2.html) I provided a more indepth look at CFML in lambda.  In this post we will explore how to install extentions so we can use functions such as cfimage of the AWS S3 extentions in cfml.
+In the [previouse article on CFML](https://blog.kukiel.dev/posts/CFML-Lucee-in-Lambda-with-APIGateway-Part2.html) I provided a more indepth look at CFML in lambda.  In this post we will explore how to install extentions so we can use functions such as cfimage of the AWS S3 extentions in cfml.
+
+The demo url is:
+
+[https://ajzmevckf1.execute-api.ap-southeast-2.amazonaws.com/Prod/image.cfm?img=https://cdn.kukiel.dev/cows.jpg](https://ajzmevckf1.execute-api.ap-southeast-2.amazonaws.com/Prod/image.cfm?img=https://cdn.kukiel.dev/cows.jpg)
+
+You can try your own image as follows:
+
+```bash
+# jpeg, png, gif all should work
+https://ajzmevckf1.execute-api.ap-southeast-2.amazonaws.com/Prod/image.cfm?img=https://{url}/{image}.jpg
+```
 
 This was actually much easier then expected, I thought at first I'd need to drop in some extra jars, or open the lucee lite jar and add the lex files to the extentions folder then zip it back up, but it was easier then that.  Lucee extentions will be picked up and installed via envrioment variables.  We easily have this in the SAM template so literally 1 line I had the extention installed:
 

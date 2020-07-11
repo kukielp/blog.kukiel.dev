@@ -5,7 +5,7 @@ date:   2020-07-11 13:28:34 +1000
 categories: EFS and Lambda, your first intro
 ---
 
-On the 18th of June 2020 AWS released EFS for Lambda.  This is a pretty great release.  This provides serverless architectures a way to implement common tasks such as large libraries ( lambda is limitd 50mb per funciton ), access to files your other servers may have access to eg assets from exisitng applications or the ability to drop assets for comsuption for internal or exisitng services.  If this quick walth through we will look at how to creat your first Elastic File System, how to mount it in EC2 and how to mount it to Lambda and demostrate traditional compute accessing the same files as lambda.
+On the 18th of June 2020 AWS released EFS for Lambda.  This is a pretty great release.  This provides serverless architectures a way to implement common tasks such as large libraries ( lambda is limitd 50mb per function ), access to files your other servers may have access to eg assets from existing applications or the ability to drop assets for consuption of exisitng services.  In this quick walk through we will look at how to create your first Elastic File System, how to mount it in EC2 and how to mount it in Lambda.
 
 This diagram provides an overview:
 
@@ -113,3 +113,5 @@ ls -la
 It should look something like:
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/terminal.png "Diagram")
+
+At this point we have successfully mounted and EFS file system and written a few files to it.  The dd command will write a large file ( 500meg in this example ).  This allows you to look at performance aswell as just test writing a large file.

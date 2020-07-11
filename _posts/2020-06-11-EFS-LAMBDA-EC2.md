@@ -83,8 +83,33 @@ And click "Create file system" fill out the details as so and click "Sext Step",
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/fsnetwork.png "Diagram")
 
-Leave the defaults as so:
+Leave the defaults as so and click "Next"
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/fs.png "Diagram")
 
+We will now configure a client access point, I'll go into more detail later but this effectivly a folder we will segregate off and provide full read/write access for reseorces that connect.  Fill out as follows:
 
-TBC
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/access.png "Diagram")
+
+Click "next" then "Create".
+
+We are now ready to mount the EFS.  Return back to the Terminal thats is ssh'd to the ec2 and run:
+
+```
+sudo yum install -y amazon-efs-utils
+mkdir myefs
+sudo mount -t efs -o tls,accesspoint={accessPointId} {filesystemId} myefs/
+```
+
+The EFS share should now me mounted to confirm:
+
+```
+cd myefs
+ls -la
+echo "Hello World!" >> some_file.txt
+dd if=/dev/zero of=500MegFile.bin bs=500M count=1 oflag=direct
+ls -la
+````
+
+It should look something like:
+
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/terminal.png "Diagram")

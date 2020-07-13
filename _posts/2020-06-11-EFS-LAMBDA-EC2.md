@@ -115,3 +115,43 @@ It should look something like:
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/terminal.png "Diagram")
 
 At this point we have successfully mounted and EFS file system and written a few files to it.  The dd command will write a large file ( 500meg in this example ).  This allows you to look at performance aswell as just test writing a large file.
+
+We are now ready to Create a Lambda function and mount EFS.  We will need to place the lambda into a VPC that will require some extra permissions, naviagte to IAM and create a policy like so:
+
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/policy.png "Diagram")
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:CreateNetworkInterface",
+                "ec2:DeleteNetworkInterface",
+                "ec2:DescribeInstances",
+                "ec2:AttachNetworkInterface"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+````
+
+Navigate in the console to lambda and begin and select Create new function, name the Lambda function and select
+"Use default bootstrap" and "Create a new role with basic Lambda permissions"
+
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/lambda.png "Diagram")
+
+And click "Create Function", once the function is created, navigate back to IAM and edit the Role just created, add the policy we created earlier.  Apply that change and we are now ready to test Lambda and EFS.
+
+Within lambda scroll down to "VPN" and click "edit".  Select "Custom VPC" we will use the default VPC for this example so select that.  Select the Subnets, as we selected the default VPC there was only 1 subnet.
+
+In Security group select "EC2-Security Group" which we created right at the beggining of this walk through.  We actully don't need any incomming access and can't ssh to the lambda for this example we can just re0used this security group.
+
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/vpc.png "Diagram")
+
+Then click Save, this may take a few seconds to save.
+
+Next we will connect the EFS.

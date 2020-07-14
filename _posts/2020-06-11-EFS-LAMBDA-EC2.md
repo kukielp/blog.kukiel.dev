@@ -71,7 +71,7 @@ https://ap-southeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-2#
 
 Click "Create security Group" and fill in the details as so.  The sourge is the secuirty group we created for access to the ec2 instance, so type "EC2-SGroup" and select that item.
 
-![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/sg2.jpg "Diagram")
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/sg2.png "Diagram")
 
 
   Navativate to:

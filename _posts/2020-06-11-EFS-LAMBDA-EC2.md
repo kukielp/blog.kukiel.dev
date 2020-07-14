@@ -2,10 +2,10 @@
 layout: post
 title:  "EFS, Lambda and EC2 a simple Intro"
 date:   2020-07-11 13:28:34 +1000
-categories: EFS and Lambda, your first intro
+categories: A quick intro to leveraging EFS with Lambda and EC2
 ---
 
-On the 18th of June 2020 AWS released EFS for Lambda.  This is a pretty great release.  This provides serverless architectures a way to implement common tasks such as large libraries ( lambda is limited 50mb per function ), access to files your other servers may have access to e.g. assets from existing applications or the ability to drop assets for consumption of exisitng services.  In this quick walk through we will look at how to create your first Elastic File System, how to mount it in EC2 and how to mount it in Lambda.
+On the 18th of June 2020 AWS released EFS for Lambda.  This is a pretty great release.  This provides serverless architectures a way to implement common tasks such as large libraries ( lambda is limited 50mb per function zipped deploymetn package, though you can leverage layers to expand this ), access to files your other servers may have access to e.g. assets from existing applications or the ability to drop assets for consumption of exisitng services.  In this quick walk through we will look at how to create your first Elastic File System, how to mount it in EC2 and how to mount it in Lambda.
 
 This diagram provides an overview:
 
@@ -14,7 +14,6 @@ This diagram provides an overview:
 The first thing we will do is define Security Groups:
 
 1.  Your home computer/laptop ssh to ec2
-
 
 Navigate in the console to:
 
@@ -47,7 +46,7 @@ Click "Review and Launch", then click "Launch", make sure you select an existing
 
 We will ssh to the machine to test:
 
-```
+```bash
 chmod 400 ~/pathto/sshkey.pem
 
 ssh -i ~/pathto/sshkey.pem ec2-user@ipaddress
@@ -94,7 +93,7 @@ Click "next" then "Create".
 
 We are now ready to mount the EFS.  Return back to the Terminal thats is ssh'd to the ec2 and run:
 
-```
+```bash
 sudo yum install -y amazon-efs-utils
 mkdir myefs
 sudo mount -t efs -o tls,accesspoint={accessPointId} {filesystemId} myefs/
@@ -102,7 +101,7 @@ sudo mount -t efs -o tls,accesspoint={accessPointId} {filesystemId} myefs/
 
 The EFS share should now me mounted to confirm:
 
-```
+```bash
 cd myefs
 ls -la
 echo "Hello World!" >> some_file.txt
@@ -120,7 +119,7 @@ We are now ready to Create a Lambda function and mount EFS.  We will need to pla
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/policy.png "Diagram")
 
-```
+```bash
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -164,7 +163,7 @@ For Access point select the one we created, again there should only be one.
 
 For local path set this to:
 
-```
+```bash
 /mnt/demoefs
 ```
 

@@ -35,7 +35,7 @@ Navigate to:
 https://ap-southeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-2#LaunchInstanceWizard:
 ```
 
-Choose Amazon Linux 2 AMI, 64bix (x86), click "Select".  On the next screen select "t2.micro" then click "Configure instance details", ensure "Auto-assign Public IP" is set to enable as we want to ssh it directly to this machine.
+Choose Amazon Linux 2 AMI, 64bits (x86), click "Select".  On the next screen select "t2.micro" then click "Configure instance details", ensure "Auto-assign Public IP" is set to enable as we want to ssh it directly to this machine.
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/ec2.png "Diagram")
 
@@ -61,7 +61,7 @@ https://ap-southeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-2#
 
 Once you can ssh to the ec2 instance we are ready to create the Elastic File System.
 
-Now that we have a security group and EC2 instance, we want to allow the ec2 instacne to connect to EFS, we will create a scurity group for this purpose.
+Now that we have a security group and EC2 instance, we want to allow the ec2 instance to connect to EFS, we will create a security group for this purpose.
 
 Again navigate to:
 
@@ -69,7 +69,7 @@ Again navigate to:
 https://ap-southeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-southeast-2#SecurityGroups:
 ```
 
-Click "Create security Group" and fill in the details as so.  The source is the secuirty group we created for access to the EC2 instance, so type "EC2-SGroup" and select that item.
+Click "Create security Group" and fill in the details as so.  The source is the security group we created for access to the EC2 instance, so type "EC2-SGroup" and select that item.
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/sg2.jpg "Diagram")
 
@@ -116,7 +116,7 @@ It should look something like:
 
 At this point we have successfully mounted and EFS file system and written a few files to it.  The `dd` command will write a large file ( 500meg in this example ).  This allows you to look at performance aswell as just test writing a large file.
 
-We are now ready to Create a Lambda function and mount EFS.  We will need to place the lambda into a VPC that will require some extra permissions, naviagte to IAM and create a policy like so:
+We are now ready to Create a Lambda function and mount EFS.  We will need to place the lambda into a VPC that will require some extra permissions, navigate to IAM and create a policy like so:
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/policy.png "Diagram")
 
@@ -148,13 +148,13 @@ And click "Create Function", once the function is created, navigate back to IAM 
 
 Within lambda scroll down to "VPN" and click "edit".  Select "Custom VPC" we will use the default VPC for this example so select that.  Select the Subnets, as we selected the default VPC there was only 1 subnet.
 
-In Security group select "EC2-Security Group" which we created right at the beggining of this walk through.  We actully don't need any incomming access and can't ssh to the lambda for this example we can just reused this security group.
+In Security group select "EC2-Security Group" which we created right at the beginning of this walk through.  We actually don't need any incoming access and can't ssh to the lambda for this example we can just reused this security group.
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/vpc.png "Diagram")
 
 Then click Save, this may take a few seconds to save.
 
-Next we will connect the EFS.  On the main Lamba page scroll down and click "Add File systenm".
+Next we will connect the EFS.  On the main Lamba page scroll down and click "Add File system".
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/file.png "Diagram")
 
@@ -191,7 +191,7 @@ function handler () {
 
 Click, "Save" then test.  This will take a few seconds to run, it will create a 500min file on the EFS share and list the contents.
 
-Once the lambda is complete, look at the output you can see it's listing all the exisitng files that we created using EC2 aswell as the new file:
+Once the lambda is complete, look at the output you can see it's listing all the existing files that we created using EC2 as well as the new file:
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/summary.png "Diagram")
 
@@ -203,7 +203,7 @@ ls -la
 
 ![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/bin.png "Diagram")
 
-Great, we can see files and write to EFS, the files are avaliable to both lambda and ec2.  Lets quickly just read the contents of the "some_file.txt"
+Great, we can see files and write to EFS, the files are available to both lambda and ec2.  Lets quickly just read the contents of the "some_file.txt"
 
 Remove all the code in hello.sh and replace with:
 

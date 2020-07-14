@@ -154,4 +154,72 @@ In Security group select "EC2-Security Group" which we created right at the begg
 
 Then click Save, this may take a few seconds to save.
 
-Next we will connect the EFS.
+Next we will connect the EFS.  On the main Lamba page scroll down and click "Add File systenm".
+
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/file.png "Diagram")
+
+For EFS Filesystem select the filesystem created, there shoudl only be one.
+
+For Access point select the one we created, again there shoudl only be one.
+
+For local path set this to:
+
+```
+/mnt/demoefs
+```
+
+The location must be under /mnt but can be anythign you want to call it.
+
+Slick "Save" we are now ready to test.
+
+Scroll to "Function code" and replace all the content of "hello.sh" with:
+
+```bash
+function handler () {
+    EVENT_DATA=$1
+    
+    rm -rf /mnt/demoefs/500MegFile_lambda.bin
+    dd if=/dev/zero of=/mnt/demoefs/500MegFile_lambda.bin bs=500M count=1 oflag=direct
+    value=`ls -ls /mnt/demoefs`
+    
+    #value=`cat /mnt/demoefs/some_file.txt`
+    
+    RESPONSE="{\"statusCode\": 200, \"body\": \"$value\"}"
+    echo $RESPONSE
+}
+```
+
+Click, "Save" then test.  This will take a few secodns to run, it will create a 500min file on the EFS share and list teh contents.
+
+Once the lambda is complete look at the output you cna see it's listing all the exisitng files that we created using EC2 aswell as the new file:
+
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/summary.png "Diagram")
+
+Swap back to the terminal ont eh ec2 instance and run :
+
+```bash
+ls -la
+```
+
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/bin.png "Diagram")
+
+Great, we can see files and write to EFS, the files are avaliable to both lambda and ec2.  Lets quickly just read the contents of the "some_file.txt"
+
+Remove all the code in hello.sh and replace with:
+
+```bash
+function handler () {
+    EVENT_DATA=$1
+    
+    value=`cat /mnt/demoefs/some_file.txt`
+    
+    RESPONSE="{\"statusCode\": 200, \"body\": \"$value\"}"
+    echo $RESPONSE
+}
+```
+
+Click "Save" then "Test" and view the output!
+
+![Diagram](/assets/post/2020-06-11-EFS-LAMBDA-EC2/hello.png "Diagram").
+
+And there you have it, a quick overview of Lambda and EFS.  Please let me know if you woudl liek to see anything else as part of this example.

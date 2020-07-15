@@ -145,7 +145,7 @@ Navigate in the console to Lambda and select "Create new Function", name the Lam
 
 Click "Create Function". Once the function is created, navigate back to IAM and edit the Role and add the policy we created earlier.  Apply that change and we are now ready to test Lambda and EFS.
 
-Within Lambda scroll down to "VPN" and click "Edit".  Select "Custom VPC" we will use the default VPC for this example so select that.  Select the Subnets, as we selected the default VPC there was only 1 subnet.
+Within Lambda scroll down to "VPC" and click "Edit".  Select "Custom VPC" we will use the default VPC for this example so select that.  Select the Subnets, as we selected the default VPC there will be only 1 subnet avaliable.
 
 In Security group select "EC2-Security Group" which we created right at the beginning of this walk through.  We don't need any incoming access and can't ssh to the Lambda for this example so we can reuse this security group.
 
@@ -188,7 +188,7 @@ function handler () {
 }
 ```
 
-Click, "Save" then test.  This will take a few seconds to run, it will create a 500min file on the EFS share and list the contents.
+Click, "Save" then test.  This will take a few seconds to run, it will create a 500meg file on the EFS share and list the contents.
 
 Once the Lambda is complete, look at the output as you can see it's listing all the existing files that we created using EC2 as well as the new file:
 

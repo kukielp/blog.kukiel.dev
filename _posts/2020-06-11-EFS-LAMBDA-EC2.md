@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "EFS, Lambda and EC2 a simple Intro"
+title:  "EFS + Lambda + EC2 a simple Intro"
 date:   2020-07-11 13:28:34 +1000
 categories: A quick intro to leveraging EFS with Lambda and EC2
 ---

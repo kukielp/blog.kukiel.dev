@@ -13,9 +13,11 @@ I had someone reach out for help with regarding jenkins in ec2.  There are miria
  - Create the security groups that allow all ip's to the ALB and only ALB as the origin to the ec2 instance.
  - Create a target group that listens on port 80 or 443 but directs traffic to 808
 
- The first question you might ask is, why the ALB.  I want SSL, yes I can install nginx, or use jenkins with ssl but this is a lot more work.  I want to manage my SSL certificate in ACM and simply apply it to the ALB.
+ The first question you might as is, why the ALB.  I want SSL, yes I can install nginx, or use jenkins with ssl but this is alot more work.  I want to manage my SSL certificate in ACM and simply apply it to the ALB.
 
  This is a overview of what we will build:
+
+ ![Diagram](/assets/post/2020-08-21-jenkins-in-aws/diagram.png "Diagram"
 
 Step 1:  Deploy an ec2 instance.
 In the console browse to the [ec2 Dashbaord](https://ap-southeast-2.console.aws.amazon.com/ec2/home?region=ap-southeast-2#Instances:sort=instanceId)

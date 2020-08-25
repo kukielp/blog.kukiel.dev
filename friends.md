@@ -5,6 +5,10 @@ title: Friends
 
 I have some friends, here are some of there great sites:
 <ul>
+  li>
+    <a href="https://indikaudagedara.blogspot.com" target="_blank">Indika Udagedara</a>
+  </li>
+
   <li>
     <a href="https://gec.dev/" target="_blank">Andrie Gec</a>
   </li>

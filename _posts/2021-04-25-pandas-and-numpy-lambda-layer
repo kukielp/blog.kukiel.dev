@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "How to make a Python Pamndas and Numpy and Lambda layer"
-date:   2021-03-25 19:18:01 +1000
+title:  "How to make a Python Pandas and Numpy Lambda layer"
+date:   2021-04-25 19:18:01 +1000
 categories: aws lambda layers python
 ---
 
@@ -87,7 +87,7 @@ Move the folders that are unzipped for each into the python folder.  For numpy t
 
 The python folder shoudl now have 7 folders:
 
-![Zip](/assets/post/2021-04-26-pandas-and-numpy-lambda-layer/layer-1.png "Layers")
+![Zip](/assets/post/2021-04-25-pandas-and-numpy-lambda-layer/layer-1.png "Layers")
 
 Right click and zip this up ( the resulting file should be python.zip )
 
@@ -97,4 +97,4 @@ Then Navigate to "Lambda" -> "Layers" and click "Create Layer", uplaod the ip fi
 
 From your lambda function scroll down to "Layers" and click "Add a Layer", select "Custom Layer" and you will see the layer you just created.  Add that and now you can use Numpy and Pandas in your lambda function
 
-![Layer](/assets/post/2021-04-26-pandas-and-numpy-lambda-layer/layer-2.png "Layers")
+![Layer](/assets/post/2021-04-25-pandas-and-numpy-lambda-layer/layer-2.png "Layers")

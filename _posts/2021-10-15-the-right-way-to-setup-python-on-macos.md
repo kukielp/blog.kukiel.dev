@@ -119,6 +119,8 @@ Python 3.10.0
 
 Open a new terminal session and you'll see that it's still 3.10.0
 
+## Additional Python versions
+
 For this session we actually want Python 3.9.6, to accomplish this install 3.9.6 like so:
 
 {% highlight bash %}

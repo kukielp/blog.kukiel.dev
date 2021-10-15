@@ -115,7 +115,7 @@ Great!  Now how do we set that as the "global" default?
 #now test
 ~  python --version                                                                         
 Python 3.10.0
-{% endhighlight %
+{% endhighlight %}
 
 Open a new terminal session and you'll see that it's still 3.10.0
 

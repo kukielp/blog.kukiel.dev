@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lambda Compare: Rust vs Python (Interactive Demo)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0f1419;
+            color: #e7e9ea;
+            padding: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        header { text-align: center; margin-bottom: 1.5rem; }
+        header h1 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+        .subtitle { color: #71767b; font-size: 0.95rem; }
+        .demo-badge {
+            display: inline-block;
+            background: #7856ff;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            letter-spacing: 0.5px;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .memory-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 0.25rem;
+        }
+        .memory-selector label {
+            font-weight: 600;
+            color: #71767b;
+            margin-right: 0.5rem;
+        }
+        .mem-btn {
+            background: #2f3336;
+            color: #e7e9ea;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        .mem-btn .vcpu { font-size: 0.7rem; color: #71767b; }
+        .mem-btn.active { background: #7856ff; color: #fff; }
+        .mem-btn.active .vcpu { color: #c4b5fd; }
+        .mem-status { font-size: 0.85rem; color: #71767b; margin-left: 0.5rem; }
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        button:hover { transform: translateY(-1px); filter: brightness(1.1); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        #btn-warmup { background: #536471; color: #fff; }
+        #btn-run-all { background: #7856ff; color: #fff; }
+        #btn-verify { background: #22c55e; color: #fff; }
+        button.rust { background: #f97316; color: #fff; }
+        button.python { background: #3b82f6; color: #fff; }
+        .panels {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .panel {
+            background: #1a1f25;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #2f3336;
+        }
+        .rust-panel { border-top: 3px solid #f97316; }
+        .python-panel { border-top: 3px solid #3b82f6; }
+        .panel h2 { margin-bottom: 1rem; font-size: 1.3rem; }
+        .test-result { margin-bottom: 1.5rem; }
+        .test-result h3 { font-size: 0.95rem; color: #71767b; margin-bottom: 0.5rem; }
+        .progress-bar {
+            width: 100%; height: 24px; background: #2f3336;
+            border-radius: 12px; overflow: hidden; margin-bottom: 0.5rem;
+        }
+        .progress-bar .fill {
+            height: 100%; width: 0%; transition: width 0.3s ease;
+            border-radius: 12px; display: flex; align-items: center;
+            justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff;
+        }
+        .rust-panel .fill { background: linear-gradient(90deg, #f97316, #fb923c); }
+        .python-panel .fill { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .stats { font-size: 0.9rem; color: #71767b; margin-bottom: 0.5rem; }
+        .stats.active { color: #e7e9ea; }
+        .log {
+            font-family: "SF Mono", "Fira Code", monospace;
+            font-size: 0.75rem; color: #536471;
+            max-height: 120px; overflow-y: auto; line-height: 1.6;
+        }
+        .log .entry { padding: 2px 0; border-bottom: 1px solid #2f3336; }
+        .results {
+            background: #1a1f25; border-radius: 12px;
+            padding: 1.5rem; border: 1px solid #2f3336;
+        }
+        .results h2 { margin-bottom: 1rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #2f3336; }
+        th { color: #71767b; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+        td { font-family: "SF Mono", "Fira Code", monospace; font-size: 0.9rem; }
+        tr.rust-row td:first-child { color: #f97316; }
+        tr.python-row td:first-child { color: #3b82f6; }
+        .verification {
+            background: #1a1f25; border-radius: 12px; padding: 1.5rem;
+            border: 1px solid #2f3336; margin-bottom: 1.5rem; text-align: center;
+        }
+        .verify-pass { color: #22c55e; font-size: 1.1rem; font-weight: 600; }
+        .verify-fail { color: #ef4444; font-size: 1.1rem; font-weight: 600; }
+        #savings-summary {
+            margin-top: 1.5rem; padding: 1rem;
+            background: #0f2e1a; border: 1px solid #22c55e;
+            border-radius: 8px; font-size: 1.1rem;
+            text-align: center; color: #22c55e;
+        }
+        .show-code-btn {
+            background: #2f3336; color: #71767b;
+            font-size: 0.8rem; padding: 0.4rem 1rem; margin-top: 0.5rem;
+        }
+        .show-code-btn:hover { color: #e7e9ea; }
+        .code-panel {
+            margin-top: 1rem; background: #0d1117;
+            border: 1px solid #2f3336; border-radius: 8px;
+            overflow: auto; max-height: 500px;
+        }
+        .code-panel pre {
+            margin: 0; padding: 1rem;
+            font-family: "SF Mono", "Fira Code", monospace;
+            font-size: 0.72rem; line-height: 1.5;
+            color: #c9d1d9; white-space: pre; tab-size: 4;
+        }
+        .code-panel .ln {
+            display: inline-block; width: 3ch; text-align: right;
+            margin-right: 1.5ch; color: #484f58; user-select: none;
+        }
+        @media (max-width: 768px) { .panels { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lambda Compare: Rust vs Python <span class="demo-badge">SIMULATED DEMO</span></h1>
+        <p class="subtitle">Processing 50,000 event registrations — simulated with realistic timings from real benchmarks</p>
+    </header>
+
+    <section class="controls">
+        <div class="memory-selector">
+            <label>Memory / vCPU:</label>
+            <button class="mem-btn" onclick="setMemory(128)">128 MB<span class="vcpu">0.07 vCPU</span></button>
+            <button class="mem-btn active" onclick="setMemory(1024)">1024 MB<span class="vcpu">0.58 vCPU</span></button>
+            <button class="mem-btn" onclick="setMemory(4096)">4096 MB<span class="vcpu">2.3 vCPU</span></button>
+            <button class="mem-btn" onclick="setMemory(10240)">10240 MB<span class="vcpu">5.8 vCPU</span></button>
+            <span id="mem-status" class="mem-status"></span>
+        </div>
+        <div class="button-group">
+            <button id="btn-warmup" onclick="warmUp()">Warm Up</button>
+            <button id="btn-run-all" onclick="runAll()">Run All Tests</button>
+            <button id="btn-verify" onclick="verify()">Verify Data</button>
+        </div>
+        <div class="button-group">
+            <button class="rust" onclick="runTest('rust','csv')">Rust + CSV</button>
+            <button class="rust" onclick="runTest('rust','json')">Rust + JSON</button>
+            <button class="python" onclick="runTest('python','csv')">Python + CSV</button>
+            <button class="python" onclick="runTest('python','json')">Python + JSON</button>
+        </div>
+    </section>
+
+    <section class="panels">
+        <div class="panel rust-panel">
+            <h2>Rust Lambda</h2>
+            <div class="test-result" id="rust-csv-section">
+                <h3>CSV</h3>
+                <div class="progress-bar"><div class="fill" id="rust-csv-bar"></div></div>
+                <div class="stats" id="rust-csv-stats">Waiting...</div>
+                <div class="log" id="rust-csv-log"></div>
+            </div>
+            <div class="test-result" id="rust-json-section">
+                <h3>JSON</h3>
+                <div class="progress-bar"><div class="fill" id="rust-json-bar"></div></div>
+                <div class="stats" id="rust-json-stats">Waiting...</div>
+                <div class="log" id="rust-json-log"></div>
+            </div>
+            <button class="show-code-btn" onclick="toggleCode('rust')">Show Code</button>
+            <div class="code-panel" id="rust-code" style="display:none;"></div>
+        </div>
+
+        <div class="panel python-panel">
+            <h2>Python Lambda</h2>
+            <div class="test-result" id="python-csv-section">
+                <h3>CSV</h3>
+                <div class="progress-bar"><div class="fill" id="python-csv-bar"></div></div>
+                <div class="stats" id="python-csv-stats">Waiting...</div>
+                <div class="log" id="python-csv-log"></div>
+            </div>
+            <div class="test-result" id="python-json-section">
+                <h3>JSON</h3>
+                <div class="progress-bar"><div class="fill" id="python-json-bar"></div></div>
+                <div class="stats" id="python-json-stats">Waiting...</div>
+                <div class="log" id="python-json-log"></div>
+            </div>
+            <button class="show-code-btn" onclick="toggleCode('python')">Show Code</button>
+            <div class="code-panel" id="python-code" style="display:none;"></div>
+        </div>
+    </section>
+
+    <section class="verification" id="verify-section" style="display:none;">
+        <div id="verify-result"></div>
+    </section>
+
+    <section class="results" id="results-section" style="display:none;">
+        <h2>Results Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Test</th><th>Memory</th><th>Total Time</th>
+                    <th>Avg/1000 Records</th><th>Download</th><th>Parse</th><th>Est. Cost</th>
+                </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+        </table>
+        <div id="savings-summary"></div>
+    </section>
+
+<script>
+const TOTAL_RECORDS = 50000;
+const PRICE_PER_GB_SECOND = 0.0000166667;
+let MEMORY_MB = 1024;
+const results = {};
+
+const BENCHMARK_DATA = {
+    128: {
+        "rust-csv":    { total_ms: 23600, download_ms: 890, parse_ms: 520, avg_per_1000: 472 },
+        "rust-json":   { total_ms: 21200, download_ms: 950, parse_ms: 610, avg_per_1000: 424 },
+        "python-csv":  { total_ms: 298000, download_ms: 1200, parse_ms: 3800, avg_per_1000: 5960 },
+        "python-json": { total_ms: 285000, download_ms: 1350, parse_ms: 1100, avg_per_1000: 5700 },
+    },
+    1024: {
+        "rust-csv":    { total_ms: 14740, download_ms: 238, parse_ms: 140, avg_per_1000: 295 },
+        "rust-json":   { total_ms: 12416, download_ms: 272, parse_ms: 167, avg_per_1000: 248 },
+        "python-csv":  { total_ms: 21194, download_ms: 207, parse_ms: 469, avg_per_1000: 424 },
+        "python-json": { total_ms: 20205, download_ms: 288, parse_ms: 170, avg_per_1000: 404 },
+    },
+    4096: {
+        "rust-csv":    { total_ms: 10200, download_ms: 150, parse_ms: 55, avg_per_1000: 204 },
+        "rust-json":   { total_ms: 8900, download_ms: 165, parse_ms: 68, avg_per_1000: 178 },
+        "python-csv":  { total_ms: 14800, download_ms: 160, parse_ms: 190, avg_per_1000: 296 },
+        "python-json": { total_ms: 14200, download_ms: 175, parse_ms: 85, avg_per_1000: 284 },
+    },
+    10240: {
+        "rust-csv":    { total_ms: 9100, download_ms: 130, parse_ms: 32, avg_per_1000: 182 },
+        "rust-json":   { total_ms: 7800, download_ms: 140, parse_ms: 40, avg_per_1000: 156 },
+        "python-csv":  { total_ms: 13100, download_ms: 135, parse_ms: 110, avg_per_1000: 262 },
+        "python-json": { total_ms: 12600, download_ms: 148, parse_ms: 52, avg_per_1000: 252 },
+    },
+};
+
+function jitter(val, pct) {
+    return Math.round(val * (1 + (Math.random() - 0.5) * 2 * pct));
+}
+
+function formatMs(ms) {
+    if (ms < 1000) return ms + "ms";
+    return (ms / 1000).toFixed(2) + "s";
+}
+
+function estimateCost(durationMs, memMb) {
+    const gbSeconds = (memMb / 1024) * (durationMs / 1000);
+    return gbSeconds * PRICE_PER_GB_SECOND + 0.0000002;
+}
+
+function resetPanel(runtime, format) {
+    const bar = document.getElementById(runtime + "-" + format + "-bar");
+    const stats = document.getElementById(runtime + "-" + format + "-stats");
+    const log = document.getElementById(runtime + "-" + format + "-log");
+    bar.style.width = "0%";
+    bar.textContent = "";
+    stats.textContent = "Running...";
+    stats.className = "stats active";
+    log.innerHTML = "";
+}
+
+function setButtonsDisabled(disabled) {
+    document.querySelectorAll("button").forEach(function(b) { b.disabled = disabled; });
+}
+
+function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+async function simulateTest(runtime, format) {
+    const key = runtime + "-" + format;
+    const bench = BENCHMARK_DATA[MEMORY_MB][key];
+    const totalMs = jitter(bench.total_ms, 0.05);
+    const downloadMs = jitter(bench.download_ms, 0.1);
+    const parseMs = jitter(bench.parse_ms, 0.1);
+    const avgPer1000 = jitter(bench.avg_per_1000, 0.05);
+    const fileSizeMb = format === "csv" ? 7.8 : 17.1;
+
+    const bar = document.getElementById(key + "-bar");
+    const stats = document.getElementById(key + "-stats");
+    const log = document.getElementById(key + "-log");
+
+    var entry = document.createElement("div");
+    entry.className = "entry";
+    entry.textContent = "Started processing registrations." + format;
+    log.appendChild(entry);
+
+    await sleep(Math.min(downloadMs, 300));
+
+    entry = document.createElement("div");
+    entry.className = "entry";
+    entry.textContent = "Downloaded " + fileSizeMb.toFixed(1) + " MB in " + formatMs(downloadMs);
+    log.appendChild(entry);
+
+    await sleep(Math.min(parseMs, 300));
+
+    entry = document.createElement("div");
+    entry.className = "entry";
+    entry.textContent = "Parsed 50,000 records in " + formatMs(parseMs);
+    log.appendChild(entry);
+
+    var steps = 50;
+    var recordsPerStep = TOTAL_RECORDS / steps;
+    var msPerStep = (totalMs - downloadMs - parseMs) / steps;
+    var elapsed = downloadMs + parseMs;
+
+    for (var i = 1; i <= steps; i++) {
+        var batchTime = jitter(msPerStep, 0.15);
+        await sleep(Math.min(Math.max(batchTime * 0.15, 30), 150));
+        elapsed += batchTime;
+        var processed = Math.min(Math.round(recordsPerStep * i), TOTAL_RECORDS);
+        var pct = Math.round((processed / TOTAL_RECORDS) * 100);
+        bar.style.width = pct + "%";
+        bar.textContent = pct + "%";
+        stats.textContent = processed.toLocaleString() + " / " + TOTAL_RECORDS.toLocaleString() +
+            " records — " + formatMs(Math.round(elapsed)) + " elapsed";
+
+        if (i % 5 === 0) {
+            entry = document.createElement("div");
+            entry.className = "entry";
+            entry.textContent = processed + " records in " + formatMs(Math.round(elapsed)) +
+                " (batch: " + formatMs(batchTime) + ")";
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+    }
+
+    bar.style.width = "100%";
+    bar.textContent = "100%";
+    stats.textContent = "Done! " + TOTAL_RECORDS.toLocaleString() + " records in " + formatMs(totalMs);
+
+    results[key] = {
+        total_elapsed_ms: totalMs,
+        download_ms: downloadMs,
+        parse_ms: parseMs,
+        avg_per_1000_ms: avgPer1000,
+        total_records: TOTAL_RECORDS,
+        memory_mb: MEMORY_MB,
+    };
+
+    checkAllDone();
+}
+
+async function runTest(runtime, format) {
+    setButtonsDisabled(true);
+    resetPanel(runtime, format);
+    await simulateTest(runtime, format);
+    setButtonsDisabled(false);
+}
+
+async function warmUp() {
+    var btn = document.getElementById("btn-warmup");
+    btn.textContent = "Warming up...";
+    btn.disabled = true;
+    await sleep(800);
+    btn.textContent = "Warmed Up!";
+    setTimeout(function() {
+        btn.textContent = "Warm Up";
+        btn.disabled = false;
+    }, 2000);
+}
+
+async function runAll() {
+    setButtonsDisabled(true);
+    var btn = document.getElementById("btn-run-all");
+    btn.textContent = "Running...";
+
+    btn.textContent = "Warming up...";
+    await sleep(800);
+    btn.textContent = "Running...";
+
+    await sleep(500);
+
+    resetPanel("rust", "csv");
+    await simulateTest("rust", "csv");
+
+    resetPanel("rust", "json");
+    await simulateTest("rust", "json");
+
+    resetPanel("python", "csv");
+    await simulateTest("python", "csv");
+
+    resetPanel("python", "json");
+    await simulateTest("python", "json");
+
+    btn.textContent = "Run All Tests";
+    setButtonsDisabled(false);
+}
+
+async function verify() {
+    var btn = document.getElementById("btn-verify");
+    btn.textContent = "Verifying...";
+    btn.disabled = true;
+
+    var section = document.getElementById("verify-section");
+    var result = document.getElementById("verify-result");
+    section.style.display = "block";
+    result.innerHTML = '<span style="color:#71767b;">Verifying tables...</span>';
+
+    await sleep(600);
+    result.innerHTML = '<span style="color:#71767b;">Counting... Rust: 50,000, Python: 50,000</span>';
+
+    await sleep(800);
+    result.innerHTML = '<span class="verify-pass">PASS — Both tables have 50,000 records, 20 spot-checked, 0 mismatches</span>';
+
+    btn.textContent = "Verify Data";
+    btn.disabled = false;
+}
+
+function setMemory(size) {
+    document.querySelectorAll(".mem-btn").forEach(function(btn) {
+        var btnSize = parseInt(btn.textContent);
+        btn.classList.toggle("active", btnSize === size);
+    });
+    var status = document.getElementById("mem-status");
+    if (size === MEMORY_MB) {
+        status.textContent = "Already at " + size + " MB";
+        status.style.color = "#71767b";
+        return;
+    }
+    status.textContent = "Configuring...";
+    status.style.color = "#f59e0b";
+    setTimeout(function() {
+        MEMORY_MB = size;
+        var vcpu = (size / 1769).toFixed(2);
+        status.textContent = "Set to " + size + " MB (" + vcpu + " vCPU)";
+        status.style.color = "#22c55e";
+    }, 400);
+}
+
+function checkAllDone() {
+    var tests = ["rust-csv", "rust-json", "python-csv", "python-json"];
+    var allDone = tests.every(function(t) { return results[t]; });
+    if (!allDone) return;
+
+    var section = document.getElementById("results-section");
+    section.style.display = "block";
+    var tbody = document.getElementById("results-body");
+    tbody.innerHTML = "";
+
+    tests.forEach(function(test) {
+        var data = results[test];
+        var parts = test.split("-");
+        var runtime = parts[0];
+        var format = parts[1];
+        var cost = estimateCost(data.total_elapsed_ms, data.memory_mb);
+
+        var row = document.createElement("tr");
+        row.className = runtime + "-row";
+        row.innerHTML =
+            "<td>" + runtime.charAt(0).toUpperCase() + runtime.slice(1) + " + " + format.toUpperCase() + "</td>" +
+            "<td>" + data.memory_mb + " MB</td>" +
+            "<td>" + formatMs(data.total_elapsed_ms) + "</td>" +
+            "<td>" + formatMs(data.avg_per_1000_ms) + "</td>" +
+            "<td>" + formatMs(data.download_ms) + "</td>" +
+            "<td>" + formatMs(data.parse_ms) + "</td>" +
+            "<td>$" + cost.toFixed(7) + "</td>";
+        tbody.appendChild(row);
+    });
+
+    var pythonAvg = (results["python-csv"].total_elapsed_ms + results["python-json"].total_elapsed_ms) / 2;
+    var rustAvg = (results["rust-csv"].total_elapsed_ms + results["rust-json"].total_elapsed_ms) / 2;
+    var speedup = (pythonAvg / rustAvg).toFixed(1);
+    var pythonCost = estimateCost(pythonAvg, MEMORY_MB);
+    var rustCost = estimateCost(rustAvg, MEMORY_MB);
+    var savingsPct = ((1 - rustCost / pythonCost) * 100).toFixed(0);
+    var invocationsPerDay = 1000000 / 50000;
+    var monthlySavings = ((pythonCost - rustCost) * invocationsPerDay * 30).toFixed(2);
+
+    var summary = document.getElementById("savings-summary");
+    summary.innerHTML = "<strong>Rust is " + speedup + "x faster</strong> — saving " +
+        savingsPct + "% on compute costs.<br>" +
+        "At 1M events/day, that’s <strong>$" + monthlySavings + "/month saved</strong> on this workload alone.";
+}
+
+var RUST_CODE = 'use aws_sdk_apigatewaymanagement::primitives::Blob;\nuse aws_sdk_dynamodb::types::{AttributeValue, PutRequest, WriteRequest};\nuse lambda_runtime::{service_fn, Error, LambdaEvent};\nuse serde::{Deserialize, Serialize};\nuse std::env;\nuse std::io::Cursor;\nuse std::time::Instant;\n\n#[derive(Debug, Clone, Deserialize, Serialize)]\nstruct Registration {\n    registration_id: String,\n    event_id: String,\n    event_name: String,\n    attendee_name: String,\n    email: String,\n    phone: String,\n    ticket_type: String,\n    purchase_date: String,\n    amount_paid: String,\n    payment_method: String,\n    seat_section: String,\n}\n\nasync fn handler(event: LambdaEvent<serde_json::Value>)\n    -> Result<serde_json::Value, Error> {\n    let ws_event: WebSocketEvent = serde_json::from_value(event.payload)?;\n    let connection_id = ws_event.request_context.connection_id;\n    // ... setup AWS clients ...\n\n    let file_key = request_body.file_key.unwrap_or_default();\n    process_file(&apigw_client, &connection_id, &file_key).await\n}\n\nasync fn process_file(\n    apigw_client: &aws_sdk_apigatewaymanagement::Client,\n    connection_id: &str,\n    file_key: &str,\n) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {\n    let resp = s3_client.get_object()\n        .bucket(&bucket_name).key(file_key)\n        .send().await?;\n    let body_bytes = resp.body.collect().await?.into_bytes();\n\n    let records: Vec<Registration> = if file_key.ends_with(\".csv\") {\n        let mut rdr = csv::Reader::from_reader(Cursor::new(&body_bytes));\n        rdr.deserialize().collect::<Result<Vec<_>, _>>()?\n    } else {\n        serde_json::from_slice(&body_bytes)?\n    };\n\n    for chunk in records.chunks(25) {\n        write_batch(&dynamo_client, &table_name, chunk).await?;\n        // stream progress every 1000 records\n    }\n    Ok(())\n}\n\nasync fn write_batch(\n    client: &aws_sdk_dynamodb::Client,\n    table_name: &str,\n    items: &[Registration],\n) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {\n    let write_requests: Vec<WriteRequest> = items.iter().map(|r| {\n        WriteRequest::builder()\n            .put_request(\n                PutRequest::builder()\n                    .item(\"registration_id\", AttributeValue::S(r.registration_id.clone()))\n                    .item(\"event_id\", AttributeValue::S(r.event_id.clone()))\n                    // ... remaining fields\n                    .build().expect(\"valid put request\"),\n            ).build()\n    }).collect();\n\n    let mut unprocessed = write_requests;\n    loop {\n        let resp = client.batch_write_item()\n            .request_items(table_name, unprocessed)\n            .send().await?;\n        match resp.unprocessed_items() {\n            Some(items) if items.contains_key(table_name) => {\n                unprocessed = items.get(table_name).unwrap().clone();\n                tokio::time::sleep(Duration::from_millis(50)).await;\n            }\n            _ => break,\n        }\n    }\n    Ok(())\n}';
+
+var PYTHON_CODE = 'import csv\nimport io\nimport json\nimport os\nimport time\nfrom decimal import Decimal\n\nimport boto3\n\ns3 = boto3.client(\"s3\")\ndynamodb = boto3.resource(\"dynamodb\")\n\nBUCKET_NAME = os.environ[\"BUCKET_NAME\"]\nTABLE_NAME = os.environ[\"TABLE_NAME\"]\nWEBSOCKET_URL = os.environ[\"WEBSOCKET_URL\"]\n\n\ndef send_message(connection_id, data):\n    apigw = boto3.client(\n        \"apigatewaymanagementapi\",\n        endpoint_url=WEBSOCKET_URL,\n    )\n    apigw.post_to_connection(\n        ConnectionId=connection_id,\n        Data=json.dumps(data).encode(),\n    )\n\n\ndef handler(event, context):\n    connection_id = event[\"requestContext\"][\"connectionId\"]\n    body = json.loads(event.get(\"body\", \"{}\"))\n\n    file_key = body[\"file_key\"]\n    table = dynamodb.Table(TABLE_NAME)\n    start_time = time.time()\n\n    obj = s3.get_object(Bucket=BUCKET_NAME, Key=file_key)\n    raw = obj[\"Body\"].read().decode(\"utf-8\")\n\n    if file_key.endswith(\".csv\"):\n        reader = csv.DictReader(io.StringIO(raw))\n        records = list(reader)\n    else:\n        records = json.loads(raw)\n\n    processed = 0\n    with table.batch_writer() as batch:\n        for record in records:\n            record[\"amount_paid\"] = Decimal(str(record[\"amount_paid\"]))\n            batch.put_item(Item=record)\n            processed += 1\n\n            if processed % 1000 == 0:\n                elapsed = (time.time() - start_time) * 1000\n                send_message(connection_id, {\n                    \"status\": \"progress\",\n                    \"records_processed\": processed,\n                    \"elapsed_ms\": round(elapsed),\n                })\n\n    total_elapsed = (time.time() - start_time) * 1000\n    send_message(connection_id, {\n        \"status\": \"complete\",\n        \"total_records\": processed,\n        \"total_elapsed_ms\": round(total_elapsed),\n    })\n\n    return {\"statusCode\": 200}';
+
+function escapeHtml(s) {
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function toggleCode(runtime) {
+    var panel = document.getElementById(runtime + "-code");
+    var btn = panel.previousElementSibling;
+    if (panel.style.display === "none") {
+        var code = runtime === "rust" ? RUST_CODE : PYTHON_CODE;
+        var lines = code.split("\n");
+        var html = lines.map(function(line, i) {
+            return '<span class="ln">' + (i+1) + '</span>' + escapeHtml(line);
+        }).join("\n");
+        panel.innerHTML = "<pre>" + html + "</pre>";
+        panel.style.display = "block";
+        btn.textContent = "Hide Code";
+    } else {
+        panel.style.display = "none";
+        btn.textContent = "Show Code";
+    }
+}
+</script>
+</body>
+</html>

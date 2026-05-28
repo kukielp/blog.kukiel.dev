@@ -8,9 +8,8 @@ jobs:
   github-pages:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      # Use GitHub Actions' cache to shorten build times and decrease load on servers
-      - uses: actions/cache@v2
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gemz-${{ hashFiles('**/Gemfile.lock') }}
@@ -18,10 +17,9 @@ jobs:
             ${{ runner.os }}-gemz-
 
       - uses: lemonarc/jekyll-action@1.0.0
-      
-        # Push to S3
+
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

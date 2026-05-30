@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Running COBOL on AWS Lambda"
-date:   2020-05-22 018:18:12 +1000
+date:   2020-05-22 18:18:12 +1000
 categories: aws COBOL lambda ec2 costsavings docker
 ---
 
@@ -11,7 +11,7 @@ categories: aws COBOL lambda ec2 costsavings docker
     margin-right: auto;"/>
 
 
-I have spent part of my working career in Financial services, it's a great industry and anyone who has spent any time there knows Mainframe, COBOL and Fortran do come up.  I know of one COBOL programmer personally ( the wife of a friend ), however have never seen COBOL code myself unitl ~a year ago where I did some research, found a compiler and tried it (Hello COBOL).  I then did a quick google about running this in Lambda ( why not? ) and found this [repo](https://github.com/ktsmy/aws-lambda-cobol-sample).  I left it at that.
+I have spent part of my working career in Financial services, it's a great industry and anyone who has spent any time there knows Mainframe, COBOL and Fortran do come up.  I know of one COBOL programmer personally ( the wife of a friend ), however have never seen COBOL code myself until ~a year ago where I did some research, found a compiler and tried it (Hello COBOL).  I then did a quick google about running this in Lambda ( why not? ) and found this [repo](https://github.com/ktsmy/aws-lambda-cobol-sample).  I left it at that.
 
 Recently I was triggered to re-visit the project, I forked the repo and made some changes, added a [SAM template](https://aws.amazon.com/serverless/sam/) adjusted the build scripts and exposed the result as an invokable http endpoint, you can see the result here:
 

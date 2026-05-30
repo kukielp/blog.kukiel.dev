@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "A pathway to success: breaking into a developer career"
+date:   2021-06-11 19:18:01 +1000
+categories: career development learning
+---
+
 I’m contacted almost daily by current students or those recently finished studying as well as those considering a career change into IT, specifically into development-based roles. I remember what it was like at university, thinking and chatting with mates about what our job would look like. I was fortunate enough to spend some time with a Melbourne consultancy working on telco project during uni holidays and that really opened my eyes as to what is involved in the job I’d likely go into.
 
 What is the core of our role? It’s problem solving!

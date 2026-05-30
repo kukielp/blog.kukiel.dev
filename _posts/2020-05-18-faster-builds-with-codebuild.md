@@ -15,7 +15,7 @@ RUN gem install em-websocket eventmachine ffi forwardable-extended i18n jekyll-s
 RUN gem install safe_yaml ruby_dep rouge rb-inotify rb-fsevent public_suffix pathutil mercenary kramdown kramdown-parser-gfm
 {% endhighlight %}
 
-This step ussually takes about 5 mins at least to run, I don't want to run it every time.  By added them into the image itself we now no longer need to install them each build, they are now in the image for consumption.
+This step usually takes about 5 mins at least to run, I don't want to run it every time.  By adding them into the image itself we now no longer need to install them each build, they are now in the image for consumption.
 
 We now rebuild that image:
 
@@ -26,18 +26,18 @@ docker build -t kukielp/codebuild:zain-v1 .
 docker push kukielp/codebuild:zain-v1
 {% endhighlight %}
 
-One thing to keep in mind is the gem pacakges ( if we were to rebuild the image in the future ) will install the latest version for each gem you may wich to specify a vesion. eg
+One thing to keep in mind is the gem packages ( if we were to rebuild the image in the future ) will install the latest version for each gem you may wish to specify a version. eg
 
 {% highlight bash %}
 gem install jekyll -v 4.0.1
 {% endhighlight %}
 
-The build will be super fast now, and faster is less compute time and therfore will cost you less ( as codebuild is priced per build minute ).
+The build will be super fast now, and faster is less compute time and therefore will cost you less ( as codebuild is priced per build minute ).
 
 ![Speedy](/assets/post/2020-05-18-faster-builds-with-codebuild/build.gif "Speedy")
 
 Basically I kept this in the docker file:
-( notice I also included preact the cli tool aswell)
+( notice I also included preact the cli tool as well)
 {% highlight bash %}
 # Copyright 2020-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #

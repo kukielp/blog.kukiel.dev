@@ -9,11 +9,11 @@ I use Python more and more regularly and each time I set up a new machine I go t
 
 ## Problem Statement:
 - I want to use multiple versions of Python locally
-- I do not want to override the default version of Python on the Mac in-case it's required some something else.
+- I do not want to override the default version of Python on the Mac in case it's required for something else.
 - I do not want to edit symlinks to the python binaries
 
 ## Solution: 
-The solution is pyenv.  Pyenv allows me to install and manage as many version as python as I need and flip between them where required, it uses a convention to allow my terminal to use a version on Python installed under my home directory rather then over writing the global install.
+The solution is pyenv.  Pyenv allows me to install and manage as many versions of python as I need and flip between them where required, it uses a convention to allow my terminal to use a version of Python installed under my home directory rather than overwriting the global install.
 
 In this example I am setting up my 2020 M1 MacBook pro, by default the Python version is:
 
@@ -31,7 +31,7 @@ Python 3.8.9
 I really want Python 3.10 for [Pygame](https://www.pygame.org/news), and 3.9 for [AWS Lambda](https://aws.amazon.com/lambda/), this is how you can accomplish that.
 
 ##  Installation
-To accomplish this we first start with [Homebrew](https://brew.sh/), If your reading this your likely familiar, if not Homebrew is a software manager that is priamrliy used for MacOs ( though I do use it on linux ) to install the software I require with ease.
+To accomplish this we first start with [Homebrew](https://brew.sh/), If you're reading this you're likely familiar, if not Homebrew is a software manager that is primarily used for MacOs ( though I do use it on linux ) to install the software I require with ease.
 
 You can install HomeBrew in a terminal like so:
 {% highlight bash %}
@@ -55,7 +55,7 @@ fi
 EOT
 {% endhighlight %}
 
-Now I am use zsh if you are using bash that should read:
+Now I use zsh, if you are using bash that should read:
 {% highlight bash %}
 cat <<EOT >> ~/.bash_profile 
 export PYENV_ROOT="$HOME/.pyenv"

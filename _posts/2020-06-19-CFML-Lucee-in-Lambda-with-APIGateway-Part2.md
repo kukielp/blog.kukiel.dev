@@ -2,23 +2,23 @@
 layout: post
 title:  "Compiling Fuseless in Cloud 9 for Coldfusion/CFML in AWS Lambda"
 date:   2020-06-20 19:18:01 +1000
-categories: aws lambda apigateway cfml lucee java coretto
+categories: aws lambda apigateway cfml lucee java corretto
 ---
 
 ![Function](/assets/post/2020-06-19-CFML-Lucee-in-Lambda-with-APIGateway-Part2/header.png "Function")
 
-In the [previouse article on CFML](https://blog.kukiel.dev/posts/CFML-Lucee-in-Lambda-with-APIGateway.html) I provided a very high level overview of CFML in Lambda.  In this post I will show how easy it is to:
+In the [previous article on CFML](https://blog.kukiel.dev/posts/CFML-Lucee-in-Lambda-with-APIGateway.html) I provided a very high level overview of CFML in Lambda.  In this post I will show how easy it is to:
 - Install a JDK on Cloud9
 - Install gradle for java projects
 - Compile Fuseless from source
 - Deploy a CFML mini app to AWS Lamba
 
-The video provided shows htat in 7 minutes I was able to from a completly fresh enviroment deploy a PoC CFML lambda app.
+The video provided shows that in 7 minutes I was able to, from a completely fresh environment, deploy a PoC CFML lambda app.
 
-Every step exectued is listed below with some commentary.
+Every step executed is listed below with some commentary.
 
 ```bash
-# Install Coretto ( java 1.8 ) - https://aws.amazon.com/corretto this is the jdk required to compile Fuseless
+# Install Corretto ( java 1.8 ) - https://aws.amazon.com/corretto this is the jdk required to compile Fuseless
 sudo yum install -y https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.rpm
 ```
 ![Function](/assets/post/2020-06-19-CFML-Lucee-in-Lambda-with-APIGateway-Part2/coretto.png "Function")
@@ -31,7 +31,7 @@ wget https://services.gradle.org/distributions/gradle-6.5-bin.zip -P /tmp
 
 sudo unzip -d /opt/gradle /tmp/gradle-6.5-bin.zip
 
-# Set 2 EVN variables to add gradel to the path 
+# Set 2 ENV variables to add gradle to the path 
 export GRADLE_HOME=/opt/gradle/gradle-6.5
 export PATH=${GRADLE_HOME}/bin:${PATH}
 
@@ -43,12 +43,12 @@ TXT
 ```
 ![Function](/assets/post/2020-06-19-CFML-Lucee-in-Lambda-with-APIGateway-Part2/coretto.png "Function")
 
-Open a new terminal ( Java home wont be set after the corretto install untill you set it or opena  new terminal ).
+Open a new terminal ( Java home won't be set after the corretto install until you set it or open a new terminal ).
 
 ```bash
-# Check is java is avaliable for use
+# Check if java is available for use
 java -version
-# Check is gradle is avaliable for use
+# Check if gradle is available for use
 gradle -v
 ```
 ![Function](/assets/post/2020-06-19-CFML-Lucee-in-Lambda-with-APIGateway-Part2/java.png "Function")
@@ -108,4 +108,4 @@ Full video:
   <iframe class="responsive-iframe" src="https://www.youtube.com/embed/K3fO9buAdtE" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-If you are not sure what CLoud 9 is it's basical a Virtual machine with a web based IDE.  I am runnign Amazon Linux.  You can read more about it here: [https://aws.amazon.com/cloud9/](https://aws.amazon.com/cloud9/)
+If you are not sure what Cloud 9 is it's basically a Virtual machine with a web based IDE.  I am running Amazon Linux.  You can read more about it here: [https://aws.amazon.com/cloud9/](https://aws.amazon.com/cloud9/)

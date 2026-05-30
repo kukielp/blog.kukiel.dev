@@ -5,7 +5,7 @@ date:   2021-04-25 19:18:01 +1000
 categories: aws lambda layers python
 ---
 
-Lambda layers are great, I can keep my lambda package size small and share the dependacy accross differnt functions.  One of the most commonly used set on librarys when dealing witt Python is both pandas and numpy.  In this overview I will show you how to make a layer that you can use.
+Lambda layers are great, I can keep my lambda package size small and share the dependency across different functions.  One of the most commonly used sets of libraries when dealing with Python is both pandas and numpy.  In this overview I will show you how to make a layer that you can use.
 
 Consider the following code:
 
@@ -23,7 +23,7 @@ def lambda_handler(event, context):
     raw_df = pd.read_csv(io.BytesIO(obj['Body'].read()), sep='\t'
 ```
 
-The lmabda run time comes packaged with boto3 but not pandas or numpy awill result int he following errors:
+The lambda runtime comes packaged with boto3 but not pandas or numpy which will result in the following errors:
 
 Without pandas
 ```
@@ -66,7 +66,7 @@ https://pypi.org/project/pytz/#files
 
 https://pypi.org/project/pandas/#files
 
-The process is the same for all 3, brows to the URL and find the python versiopn you want and look for 
+The process is the same for all 3, browse to the URL and find the python version you want and look for 
 
 ```
 numpy-1.20.2-cp38-cp38-manylinux1_x86_64.whl (13.7 MB)
@@ -79,13 +79,13 @@ version.
 
 Do this for all 3 and download those files
 
-Next create a folder ( it can be in ~/Downlaods ) called python, the folder must be called python.
+Next create a folder ( it can be in ~/Downloads ) called python, the folder must be called python.
 
-Then unzip each .whl file ( they are a whl extention but there a zip file )
+Then unzip each .whl file ( they are a whl extension but they're a zip file )
 
 Move the folders that are unzipped for each into the python folder.  For numpy there were 3 folders for pandas and pytz there were only 2.
 
-The python folder shoudl now have 7 folders:
+The python folder should now have 7 folders:
 
 ![Zip](/assets/post/2021-04-25-pandas-and-numpy-lambda-layer/layer-1.png "Layers")
 
@@ -93,7 +93,7 @@ Right click and zip this up ( the resulting file should be python.zip )
 
 This is the layer and is ready for uploading.
 
-Then Navigate to "Lambda" -> "Layers" and click "Create Layer", uplaod the ip file ( python.zip ) and dont forget to select the Compatible runtime.
+Then Navigate to "Lambda" -> "Layers" and click "Create Layer", upload the zip file ( python.zip ) and don't forget to select the Compatible runtime.
 
 From your lambda function scroll down to "Layers" and click "Add a Layer", select "Custom Layer" and you will see the layer you just created.  Add that and now you can use Numpy and Pandas in your lambda function
 

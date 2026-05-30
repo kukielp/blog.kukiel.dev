@@ -1,11 +1,11 @@
 ---
 layout: post
 title:  "EFS + Lambda + EC2 a simple Intro"
-date:   2020-07-11 13:28:34 +1000
-categories: A quick intro to leveraging EFS with Lambda and EC2
+date:   2020-06-11 13:28:34 +1000
+categories: aws efs lambda ec2
 ---
 
-On the 18th of June 2020 AWS released EFS for Lambda.  This is a pretty great release that provides serverless architectures a way to implement common tasks such as large libraries ( Lambda is limited to 50mb per function zipped deployment package, though you can leverage layers to expand this ), access to files your other servers may have access to e.g. assets from existing applications or the ability to drop assets for consumption of exisitng services.  In this quick walk through we will look at how to create your first Elastic File System, how to mount it in EC2 and how to mount it in Lambda.
+On the 18th of June 2020 AWS released EFS for Lambda.  This is a pretty great release that provides serverless architectures a way to implement common tasks such as large libraries ( Lambda is limited to 50mb per function zipped deployment package, though you can leverage layers to expand this ), access to files your other servers may have access to e.g. assets from existing applications or the ability to drop assets for consumption of existing services.  In this quick walk through we will look at how to create your first Elastic File System, how to mount it in EC2 and how to mount it in Lambda.
 
 This diagram provides an overview:
 
@@ -145,7 +145,7 @@ Navigate in the console to Lambda and select "Create new Function", name the Lam
 
 Click "Create Function". Once the function is created, navigate back to IAM and edit the Role and add the policy we created earlier.  Apply that change and we are now ready to test Lambda and EFS.
 
-Within Lambda scroll down to "VPC" and click "Edit".  Select "Custom VPC" we will use the default VPC for this example so select that.  Select the Subnets, as we selected the default VPC there will be only 1 subnet avaliable.
+Within Lambda scroll down to "VPC" and click "Edit".  Select "Custom VPC" we will use the default VPC for this example so select that.  Select the Subnets, as we selected the default VPC there will be only 1 subnet available.
 
 In Security group select "EC2-Security Group" which we created right at the beginning of this walk through.  We don't need any incoming access and can't ssh to the Lambda for this example so we can reuse this security group.
 

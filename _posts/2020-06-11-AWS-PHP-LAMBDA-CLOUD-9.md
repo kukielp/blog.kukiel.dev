@@ -9,7 +9,7 @@ categories: AWS LAMBDA CLOUD9 PHP
 
 We have had custom layers for a long time in Lambda, I have used them for a few mini app I have personally as well as professionally.  Then along comes this official [AWS Post](https://aws.amazon.com/blogs/compute/introducing-the-new-serverless-lamp-stack/) on the (L)ambda(A)piGateway(M)ySQL(P)hp stack.  I host a few Wordpress sites one of which is DevCOP ( [click here to join it's free](https://devcop.io/) on [Lightsail](https://aws.amazon.com/lightsail/) ).  LightSail has served me incredibly well however it would be an interesting challenge to move the site to Lambda and Serverless Aurora.
 
-But first things first how can we create an deploy a PHP layer and some sample PHP code to run in lambda without using one of the pre-built packages and why would you want to do this.  I suspect the main reason you might want to do this yourself is to well....do it yourself.  It helps to understand what is happening and how the pieces come together.
+But first things first how can we create and deploy a PHP layer and some sample PHP code to run in lambda without using one of the pre-built packages and why would you want to do this.  I suspect the main reason you might want to do this yourself is to well....do it yourself.  It helps to understand what is happening and how the pieces come together.
 
 In this example we will:
 - Create a Cloud9 instance
@@ -52,7 +52,7 @@ Confirm:
 
 ![Cloud9D](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/Cloud-9-4.png "Cloud9D")
 
-The steps we are going to run are taken from the AWS Announcement blog.  It is hand y to copy/paste them to a file on the Cloud9 instance to avoided jumping between tabs.  The full scrip is below.  Open the REDME.md file in Cloud9, delete all the content and paste this in.
+The steps we are going to run are taken from the AWS Announcement blog.  It is handy to copy/paste them to a file on the Cloud9 instance to avoid jumping between tabs.  The full script is below.  Open the README.md file in Cloud9, delete all the content and paste this in.
 ```bash
 # Update packages and install needed compilation dependencies
 sudo yum update -y
@@ -123,14 +123,14 @@ aws lambda publish-layer-version \
     --region $AWS_REGION
 ```
 
-Once these steps are completed we now have the required lambda layers in our AWS account to run PHP.  To confirm what have been created navigate to:
+Once these steps are completed we now have the required lambda layers in our AWS account to run PHP.  To confirm what has been created navigate to:
 https://ap-southeast-1.console.aws.amazon.com/lambda/home?region=ap-southeast-1#/layers Take note of the region in the URL and ensure this is the region you are operating in.
 
 We will see 2 new layers:
 
 ![Layers](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/layer.png "Layers")
 
-Let's now create a sample PHP lambda function.  From the "Layers" interface click "Functions", then "Create Function".  Give your function a name.  For "Runtime" select "Provide you own bootstrap".  If you have a role for Lambda select that otherwise select "Create a new role with basic Lambda permissions".  Then click "Create Function"
+Let's now create a sample PHP lambda function.  From the "Layers" interface click "Functions", then "Create Function".  Give your function a name.  For "Runtime" select "Provide your own bootstrap".  If you have a role for Lambda select that otherwise select "Create a new role with basic Lambda permissions".  Then click "Create Function"
 
 ![Function](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/create-function.png "Function")
 
@@ -138,7 +138,7 @@ Once the function is created we need to add the 2 layers we created.
 
 ![Function](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/add-layer.png "Function")
 
-Add the layers in order, the PHP run time first then the vendor layer as below: Please not you will have to use the ARN of your layers not those in the image:
+Add the layers in order, the PHP runtime first then the vendor layer as below: Please note you will have to use the ARN of your layers not those in the image:
 
 ![Function](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/add-layer-2.png "Function")
 
@@ -153,7 +153,7 @@ We are now ready for some php code!  We will use the in page editor, remove the 
 
 ![Function](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/code.png "Function")
 
-Writesome php code or just copy sand paste this sample.
+Write some php code or just copy and paste this sample.
 ```php
 <?php
    function  index($event) {
@@ -174,10 +174,10 @@ Scroll up and click "Test"
 
 ![Function](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/result.png "Function")
 
-And there you have it You own Run time, compiler, packaged  and deploy by you running PHP in AWS Lambda.
+And there you have it, your own runtime, compiler, packaged and deployed by you, running PHP in AWS Lambda.
 
 In part 2 we will explore the bootstrap file and how to invoke the Lambda function with API Gateway.
 
-Foe the full Vido walkthrough click and watch here:
+For the full Video walkthrough click and watch here:
 
 [![IMAGE ALT TEXT HERE](/assets/post/2020-06-11-AWS-PHP-LAMBDA-CLOUD-9/embed.png)](https://www.youtube.com/watch?v=hBju8c8Oq6s)

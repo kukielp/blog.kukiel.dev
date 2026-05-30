@@ -4,7 +4,7 @@ title:  "The repository 'http://ppa.launchpad.net....does not have a Release fil
 date:   2020-05-15 10:28:34 +1000
 categories: linux ubuntu debian
 ---
-Ever followed a guide a little to blindly and added a repository and now expereincing issues such as:
+Ever followed a guide a little too blindly and added a repository and now experiencing issues such as:
 
 {% highlight bash %}
 The repository 'http://ppa.launchpad.net/{something}/archive/ubuntu focal Release' does not have a Release file.

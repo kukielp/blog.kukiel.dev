@@ -5,7 +5,7 @@ date:   2020-06-19 19:18:01 +1000
 categories: aws lambda apigateway cfml lucee
 ---
 
-In a previous life I had worked on some Coldfusion projects. It was an interesting language, if you are not familiar you can read about the language itself [here](https://en.wikipedia.org/wiki/ColdFusion_Markup_Language).  ColdFusion is owned, built and supported by Adobe, though along the way a few open source CFML engines, Lucee, OpenDB and many years ago one or 2 more half implemented engines.
+In a previous life I had worked on some Coldfusion projects. It was an interesting language, if you are not familiar you can read about the language itself [here](https://en.wikipedia.org/wiki/ColdFusion_Markup_Language).  ColdFusion is owned, built and supported by Adobe, though along the way a few open source CFML engines, Lucee, OpenBD and many years ago one or 2 more half implemented engines.
 
 Interestingly in 2009 OpenBD was in a state where it was deployable to the cloud via Google App engine, it's hard to believe this was 11 years ago but here is a video I took on My 2008 Mac Book.  I don’t remember much about it but there was no file system and there was a Virtual File System that used DataStore.
 https://youtu.be/BFJF_0BGIS8
@@ -28,12 +28,12 @@ The demo includes:
 - Running CFML in Lambda
 - Demonstrating the application scope persistence between invocations
 - Configuring a DSN ( Data source ) in Application.cfc
-- Lifting ENV variables and leveraging those in CMFL code
+- Lifting ENV variables and leveraging those in CFML code
 - Querying a database
 - Setting CORS ( or any other ) headers for cross site access
 - Object/cfc creation
 - Serialisation of CFML object to JSON
-- Demostrating on onError and onMissingTemplate in application.cfc
+- Demonstrating onError and onMissingTemplate in application.cfc
 
 Of course there is some cold start, Lucee is a jee application so that’s not really avoidable though there are ways to keep Lambdas warm as well as provisioned concurrency to keep some Lambdas always hot.
 

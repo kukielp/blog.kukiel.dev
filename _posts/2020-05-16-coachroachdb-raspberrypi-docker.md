@@ -6,11 +6,11 @@ categories: postgres database cockroach rpi raspberrypi docker
 ---
 I have had my eye on [CockroachDB](https://www.cockroachlabs.com/) for some time.  Put simply Cockroach DB is a Postgres compatible Multi-Master database meaning you can have multiple write nodes.  I have set this up locally approximately 6 months ago.  It was effortless to get going on MacOS.  This weekend I was diving a little deeper and wanted to see if I could get Cockroach to run on my RaspberryPi 4.
 
-The RaspberryPi 4 supports a 1.5GHz quad-core ARM Cortex-A72 CPU.  The key difference here is ARM, there are no compiled binaries availiable.  I was unable to compile the source code without some modifications to a few files which II will document eventually.  The end result was I have a cluster running across a Raspberry Pi4 and a Machine running Ubuntu on an intel i3.
+The RaspberryPi 4 supports a 1.5GHz quad-core ARM Cortex-A72 CPU.  The key difference here is ARM, there are no compiled binaries available.  I was unable to compile the source code without some modifications to a few files which I will document eventually.  The end result was I have a cluster running across a Raspberry Pi4 and a Machine running Ubuntu on an intel i3.
 
 ## Result: 
 
-![alt text](/assets/post/2020-05-16-cockroach-db-local/cockroachdb.png "CockroachDB on Rasberry Pi 4")
+![alt text](/assets/post/2020-05-16-cockroach-db-local/cockroachdb.png "CockroachDB on Raspberry Pi 4")
 
 CPUs
 {% highlight bash %}

@@ -35,7 +35,7 @@ Be aware if you are behind a proxy, you may need to edit the yum.conf file ( /et
     # proxy_password=qwerty
 {% endhighlight %}
 
-Alternativly ( assuming correct http_proxy is set):
+Alternatively ( assuming correct http_proxy is set):
 
 {% highlight bash %}
     # download locally

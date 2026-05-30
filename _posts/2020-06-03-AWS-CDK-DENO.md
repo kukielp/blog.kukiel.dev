@@ -1,11 +1,11 @@
 ---
 layout: post
 title:  "Using AWS CDK to deploy a Deno layer and sample Deno application"
-date:   2020-05-22 018:18:12 +1000
+date:   2020-06-03 18:18:12 +1000
 categories: aws Deno lambda api cdk docker
 ---
 
-<img src="https://cdn.kukiel.dev/deno-cdk.png" alt="Cobol" style="width:400px;
+<img src="https://cdn.kukiel.dev/deno-cdk.png" alt="Deno" style="width:400px;
     display: block;
     margin-left: auto;
     margin-right: auto;"/>
@@ -32,7 +32,7 @@ This is an example project showing:
 # Intro
 I have been following Deno for a little while, it's nice to use strong typing in JavaScript however the transpilers are a slight overhead. Deno does away with this and allows the use of TypeScript without compilation.
 
-The CDK stack project is still using TypeScript that is compiled however you can see in ```tsconfig.json``` that /src/program is excluded meaning we dont need to compile test files.
+The CDK stack project is still using TypeScript that is compiled however you can see in ```tsconfig.json``` that /src/program is excluded meaning we don't need to compile test files.
 
 # Stack
 The stack consists of:
@@ -52,7 +52,7 @@ This will start monitoring the CDK stack TypScript files and compile them to van
 # Layers in CDK
 How do we define a layer in CDK?  I decided not to build the runtime in this example but show how to deploy a built runtime.  I took the latest release from: 
 [https://github.com/hayd/deno-lambda/releases](https://github.com/hayd/deno-lambda/releases
-) and unzipped the contents into src/layer folder.  These file are what is required to run Demo.  In CDK we define a new layer:
+) and unzipped the contents into src/layer folder.  These files are what is required to run Deno.  In CDK we define a new layer:
 
 ```js
 const layer = new lambda.LayerVersion(this, 'deno-layer', {

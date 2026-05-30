@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Use AWS CDK to deploy a S3 bucket and use 53 to point DNS to the site!"
+title:  "Use AWS CDK to deploy an S3 bucket and use Route 53 to point DNS to the site!"
 date:   2020-06-08 08:28:34 +1000
 categories: AWS CDK S3 Route53
 ---
@@ -169,14 +169,14 @@ We are ready to deploy
 
 Once complete run: 
 {% highlight bash %}
-   curl example.url2me.com
+   curl example.url2qr.me
 {% endhighlight %}
 
 and we should see the contents of the index.html file.
 
 ![Curl](/assets/post/2020-06-08-AWS-cdk-s3-route53/curl.png "Curl")
 
-On in a browser.
+Or in a browser.
 ![safari](/assets/post/2020-06-08-AWS-cdk-s3-route53/safari.png "safari")
 
 Full repo: [https://github.com/kukielp/aws-cdk-s3](https://github.com/kukielp/aws-cdk-s3)

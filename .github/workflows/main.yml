@@ -8,6 +8,10 @@ permissions:
   id-token: write
   contents: read
 
+# Run the JavaScript actions on Node 24 (Node 20 is deprecated on the runners).
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   github-pages:
     runs-on: ubuntu-latest
@@ -30,7 +34,4 @@ jobs:
 
       - name: Sync output to S3
         run: |
-          aws s3 sync ./_site/ s3://gh-paul --delete
-      - name: Invalidate CloudFront
-        run: |
-          aws cloudfront create-invalidation --distribution-id E26N7UTKMEP224 --paths "/*"
+          aws s3 sync ./_site/ s3://blog.kukiel.dev --delete
